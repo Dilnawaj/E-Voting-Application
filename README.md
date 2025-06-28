@@ -12,7 +12,7 @@ It enables voters to securely cast votes for their favorite candidates and view 
 - Spring Boot
 - Spring Cloud OpenFeign (inter-service communication)
 - Kafka (real-time vote event streaming)
-- Haxelcast Cache (caching)
+- Hazelcast Cache (caching)
 - Eureka (service discovery)
 - Resilience4j (circuit breaker)
 - MySQL (data storage)
@@ -49,12 +49,3 @@ All services communicate via **Kafka topics** to ensure decoupled, scalable arch
 - Service discovery & fault tolerance (Eureka + Resilience4j)
 
 ---
-
-## 🚀 **Running the Backend (microservices)**
-
-Each service has its own Spring Boot project.  
-Steps (run for each):
-1. Clone the repository
-2. Install dependencies & build:
-   ```bash
-   mvn clean install
