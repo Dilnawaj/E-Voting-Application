@@ -1,0 +1,17 @@
+.responsive-login-wrapper {
+  margin: 20px auto 185px auto;   /* margin top, auto left/right, bottom */
+  width: 90%;                     /* default width on very small screens */
+  max-width: 400px;               /* cap width on larger screens */
+}
+
+@media (min-width: 968px) {
+  .responsive-login-wrapper {
+    max-width: 450px;
+  }
+}
+
+@media (min-width: 1192px) {
+  .responsive-login-wrapper {
+    max-width: 400px;
+  }
+}
