@@ -29,7 +29,7 @@ It enables voters to securely cast votes for their favorite candidates and view 
 
 | Module | Purpose |
 |-------|--------:|
-| **API Gateway** |All the request first pass through this Gateway|
+| **API Gateway** |All the request firstly pass through this Gateway|
 | **Candidate Service** | Register and manage candidates |
 | **Voter Service** | Register voters, check eligibility |
 | **Vote Casting Service** | Accept votes, validate voters |
