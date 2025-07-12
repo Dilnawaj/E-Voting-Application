@@ -4,13 +4,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { CandidateProvider } from './context/CandidateContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { RecoilRoot } from 'recoil';
 import { VoterProvider } from './context/VoterContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <CandidateProvider>
       <VoterProvider>
+         <RecoilRoot>
     <App />
+    </RecoilRoot>
     </VoterProvider>
     </CandidateProvider>
   </React.StrictMode>

@@ -11,3 +11,7 @@ export const registerCandidate = async (candidate)=>{
   const response = await axios.post(BASE_URL,candidate);
   return response.data;
 }
+export const getCandidateByEmail = async (email)=>{
+  const response = await axios.get(`${BASE_URL}/email?email=${email}`);
+  return response.data;
+}
