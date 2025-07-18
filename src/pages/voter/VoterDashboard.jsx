@@ -1,103 +1,88 @@
-import React from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { use, useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { VoterContext } from "../../context/VoterContext";
+import { getCandidateByConstituency } from "../../api/candidateApi";
+import CandidateCard from "./CandidateCard";
+import Base from "../../Base";
+import { castVote } from "../../api/votingApi";
 
 function VoterDashboard() {
-   const navigate = useNavigate();
-  
-  const handleLogout =()=>{
+  const [candidates, setCandidates] = useState([]);
+  const { voter } = useContext(VoterContext);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
-  }
-  const handleProfile =()=>{
-console.log("Profile clicked");
-    navigate('/candidate/profile');
-  }
-
-
-  const handleElection=()=>{
-    navigate('/candidate/election');
-  }
-
-  const handleVoted =()=>{
-    navigate('/candidate/votes');
-  }
-  const handleNotification =()=>{
-    navigate('/candidate/notification');
-  }
-
-
-  const cards = [
-    {
-      title: 'My Profile',
-      description: 'View and update your candidate profile details.',
-      color: '#4A90E2',
-      onClick:  handleProfile
-    },
-    {
-      title: 'My Elections',
-      description: 'See elections you are contesting in.',
-      color: '#50E3C2',
-      onClick: handleElection
-    },
-    {
-      title: 'Live Votes',
-      description: 'Watch live voting data and analytics.',
-      color: '#F5A623',
-      onClick:  handleVoted
-    },
-    {
-      title: 'Notifications',
-      description: 'See updates and announcements.',
-      color: '#9013FE',
-      onClick: handleNotification
+  const fetchCandidates = async () => {
+    try {
+      const response = await getCandidateByConstituency(voter.constituency);
+      setCandidates(response);
+    } catch (error) {
+      console.error("Error fetching candidates:", error);
     }
-  ];
+  };
+
+  const handleCastVote = async(candidate)=>{
+    try {
+      await castVote(candidate.candidateId,  voter.aadharNumber );
+      console.log("Vote cast successfully for:", candidate);
+    } catch (error) {
+      console.error("Error casting vote:", error);
+    }
+  }
+  const handleVote = (candidate) => {
+    setShowModal(true);
+    console.log("Vote for candidate:", candidate);
+handleCastVote(candidate);
+    setTimeout(() => {
+      setShowModal(false);
+      navigate("/login");
+    }, 3000);
+  };
+
+  useEffect(() => {
+    fetchCandidates();
+  }, [voter]);
 
   return (
-      <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(to right, #6a11cb, #2575fc)',
-      color: '#fff',
-      padding: '40px'
-    }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '36px', fontWeight: 'bold' }}>
-        Voter Dashboard
-      </h1>
-
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-        gap: '20px',
-        maxWidth: '1000px',
-        margin: '0 auto'
-      }}>
-        {cards.map((card, index) => (
+    <Base>
+      <div className="voter-dashboard">
+        <div className="container mt-4">
           <div
-            key={index}
-            onClick={card.onClick}
-            style={{
-              backgroundColor: card.color,
-              borderRadius: '15px',
-              padding: '20px',
-              cursor: 'pointer',
-              boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
-              transition: 'transform 0.2s, box-shadow 0.2s'
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 12px 25px rgba(0,0,0,0.4)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
-            }}
+            className="card shadow-lg p-3 mb-4 rounded mx-auto"
+            style={{ backgroundColor: "#2fa6e1ff",
+              height: "120px",             // Adjust this value as needed
+    overflow: "hidden"
+             }}
           >
-            <h3 style={{ fontSize: '22px', marginBottom: '10px' }}>{card.title}</h3>
-            <p style={{ fontSize: '14px', opacity: 0.9 }}>{card.description}</p>
+            <div className="card-body text-center">
+              <h3 className="card-title  fw-bold">🗳️ Vote for the Candidate</h3>
+              <p className="card-text text-secondary">
+                Choose your leader wisely and cast your vote.
+              </p>
+            </div>
           </div>
-        ))}
+        </div>
+
+        <div className="card-grid">
+          {candidates.map((candidate) => (
+            <CandidateCard
+              key={candidate.candidateId}
+              candidate={candidate}
+              onVote={handleVote}
+            />
+          ))}
+        </div>
+
+        {showModal && (
+          <div className="modal-overlay">
+            <div className="vote-modal">
+              <h2 style={{ color: "#2e7d32" }}>{voter.name}, thank you for your vote!</h2>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
-  )
+    </Base>
+  );
 }
 
 export default VoterDashboard;

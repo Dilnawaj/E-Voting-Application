@@ -16,6 +16,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { CandidateContext } from "../context/CandidateContext";
 import { getCandidateByEmail } from "../api/candidateApi";
+import { getVoterData } from "../api/voterApi";
+import { VoterContext } from "../context/VoterContext";
 
 function LoginPage() {
   const [email, setEmail] = useState("")
@@ -25,7 +27,7 @@ function LoginPage() {
   const navigate = useNavigate();
   
     const { candidate, setCandidate,addCandidate } = useContext(CandidateContext);
-   
+      const { voter, setVoter, addVoter } = useContext(VoterContext);
   const handleChange = (type, e) => {
     const value = e.target.value;
     if (type === "password") {
@@ -56,6 +58,19 @@ function LoginPage() {
     }
   };
 
+
+  const fetchVoterData = async (email) => {
+    try {
+      
+      console.log("Fetching candidate data for email:", email);
+      const voterData = await getVoterData(email);
+      addVoter(voterData)
+     // addCandidate(candidateData);
+    } catch (error) {
+      console.error("Error fetching candidate data:", error);
+    }
+  };
+
   const resetLogin = () => {
     setEmail("");
     setPassword("");
@@ -78,6 +93,9 @@ console.log("Login response:", response);
         fetchCandidate(email)
         navigate("/candidate/dashboard");
       } else if (userType === "VOTER") {
+        console.log("Voter email:", email);
+        fetchVoterData(email)
+        console.log(222222222)
         navigate("/voter/dashboard");
       }
     } catch (error) {

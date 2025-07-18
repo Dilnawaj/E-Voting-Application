@@ -4,14 +4,16 @@ import { CandidateContext } from "../context/CandidateContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../pages/logout";
+import { VoterContext } from "../context/VoterContext";
 const Header = () => {
     
   const { setCandidate ,candidate} = useContext(CandidateContext);
+    const { voter, setVoter } = useContext(VoterContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     
-    logout({ setCandidate,candidate, navigate });
+    logout({ setCandidate,candidate, voter, setVoter, navigate });
   };
   return (
     <header style={styles.header}>
@@ -19,9 +21,15 @@ const Header = () => {
         <h2 style={styles.logo}>E-Voting System</h2>
       </div>
       <div style={styles.rightSection}>
-      <span style={styles.username}>
-  Welcome, {candidate && candidate.name ? candidate.name : 'User'}
+   <span style={styles.username}>
+  Welcome, {candidate && candidate.name
+    ? candidate.name
+    : voter && voter.name
+    ? voter.name
+    : 'User'}
 </span>
+
+
 
         <button style={styles.logoutButton} onClick={handleLogout}>Logout</button>
       </div>

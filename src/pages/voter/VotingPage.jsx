@@ -39,7 +39,7 @@ function VotingPage() {
       {error && <Alert color="danger">{error}</Alert>}
 
       <Row>
-        {candidates.length == 0 ? (
+        {candidates.length === 0 ? (
           <p>No candidate available</p>
         ) : (
           candidates.map((candidate) => {

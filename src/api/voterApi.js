@@ -19,4 +19,10 @@ export const getVoterInsights = async (constituency) => {
 } 
 
 
+export const getVoterData = async (email) => {
+  const response = await axios.get(`${BASE_URL}/voter-data?email=${email}`);
+  return response.data;
+} 
+
+
 

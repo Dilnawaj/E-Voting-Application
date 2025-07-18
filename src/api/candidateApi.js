@@ -30,3 +30,8 @@ export const setNotificationStatus = async(NotificationId)=>{
   const response = await axios.put(`${BASE_URL}/notifications/${NotificationId}/read`);
   return response.data;
 }
+
+export const getCandidateByConstituency = async (constituency) => {
+  const response = await axios.get(`${BASE_URL}/constituency?constituency=${constituency}`);
+  return response.data;
+}
