@@ -1,13 +1,14 @@
-import React, {  createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 
 export const CandidateContext = createContext();
 
 export const CandidateProvider = ({ children }) => {
-  const [candidates, setCandidates] = useState([]);
-const addCandidate = (newCandidate) => setCandidates(prev => [...prev, newCandidate]);
+  const [candidate, setCandidate] = useState(null);
+
+  const addCandidate = (newCandidate) => setCandidate(newCandidate);
 
   return (
-    <CandidateContext.Provider value={{ candidates, setCandidates }}>
+    <CandidateContext.Provider value={{ candidate, setCandidate, addCandidate }}>
       {children}
     </CandidateContext.Provider>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Card,
   CardBody,
@@ -14,13 +14,18 @@ import {
 import { login } from "../api/LoginApi";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { emailAtom } from "../state/emailAtom";
+import { CandidateContext } from "../context/CandidateContext";
+import { getCandidateByEmail } from "../api/candidateApi";
+
 function LoginPage() {
-  const [email, setEmail] = useRecoilState(emailAtom)
+  const [email, setEmail] = useState("")
   
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
+  
+    const { candidate, setCandidate,addCandidate } = useContext(CandidateContext);
+   
   const handleChange = (type, e) => {
     const value = e.target.value;
     if (type === "password") {
@@ -40,6 +45,16 @@ function LoginPage() {
       setPassword(value);
     }
   };
+ const fetchCandidate = async (email) => {
+    try {
+      
+      console.log("Fetching candidate data for email:", email);
+      const candidateData = await getCandidateByEmail(email);
+      addCandidate(candidateData);
+    } catch (error) {
+      console.error("Error fetching candidate data:", error);
+    }
+  };
 
   const resetLogin = () => {
     setEmail("");
@@ -50,14 +65,17 @@ function LoginPage() {
 
     console.log("Email:", email);
     try {
+      
       const response = await login({ email, password });
 console.log("Login response:", response);
       const { userType } = response;
       console.log("User Type:", userType);
+      //remove
 
       if (userType === "admin") {
         navigate("/admin/dashboard");
       } else if (userType === "CANDIDATE") {
+        fetchCandidate(email)
         navigate("/candidate/dashboard");
       } else if (userType === "VOTER") {
         navigate("/voter/dashboard");

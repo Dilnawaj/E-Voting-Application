@@ -13,3 +13,10 @@ export const getAllVoters = async ()=>{
   const response = await axios.get(BASE_URL);
   return response.data;
 }
+export const getVoterInsights = async (constituency) => {
+  const response = await axios.get(`${BASE_URL}/voter-insights?constituency=${constituency}`);
+  return response.data;
+} 
+
+
+
