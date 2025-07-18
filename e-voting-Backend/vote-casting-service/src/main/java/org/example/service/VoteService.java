@@ -24,9 +24,9 @@ private VoteRequestRepo voteRequestRepo;
 
 @Autowired
 VoteRequestProducer voteRequestProducer;
-    public void processVote(VoteRequestDTO dto) throws JsonProcessingException {
-        System.out.println("AAAAAAAAAAAAdhar Number "+dto.getAadharNumber());
-    ResponseEntity<Boolean> response= voterClient.isEligibleToVote(dto.getAadharNumber());
+    public void processVote(Integer candidateId,String aadharNumber) throws JsonProcessingException {
+
+    ResponseEntity<Boolean> response= voterClient.isEligibleToVote(aadharNumber);
 
 System.out.println(response.getBody());
         if(Boolean.FALSE.equals(response.getBody()))
@@ -34,12 +34,14 @@ System.out.println(response.getBody());
             throw  new CustomException(HttpStatus.BAD_REQUEST.value(),"Voter is not eligible." );
 
         }
-        addDataInVoteRequest(dto);
+        addDataInVoteRequest(new VoteRequestDTO(candidateId,aadharNumber));
 
     }
 
     private void addDataInVoteRequest(VoteRequestDTO dto) throws JsonProcessingException {
         VoteRequest voteRequest = new VoteRequest();
+        System.out.println("AADhar Card "+dto.getAadharNumber());
+        System.out.println("Candidate IDDD "+dto.getCandidateId());
         voteRequest.setAadharNumber(dto.getAadharNumber());
         voteRequest.setCandidateId(dto.getCandidateId());
         voteRequest.setStatus("PENDING");

@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 @FeignClient(name = "voter", fallback = VoterClientFallback.class)
 public interface VoterClient {
 
-    @GetMapping("/voter/{aadharNumber}")
+    @GetMapping("/{aadharNumber}")
     void markAsVoted(@PathVariable("aadharNumber") String aadharNumber);
 }

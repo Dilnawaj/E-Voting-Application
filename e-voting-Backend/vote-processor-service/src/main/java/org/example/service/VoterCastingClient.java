@@ -10,5 +10,5 @@ public interface VoterCastingClient {
 
 
     @PutMapping("/voted")
-    void voteDoneUpdateStatus(@RequestParam("candidateId") Integer candidateId,@RequestParam("aadharNumber") Integer aadharNumber);
+    void voteDoneUpdateStatus(@RequestParam("candidateId") Integer candidateId,@RequestParam("aadharNumber") String aadharNumber);
 }

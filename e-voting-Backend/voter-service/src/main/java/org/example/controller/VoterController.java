@@ -58,4 +58,10 @@ public class VoterController {
     {
         return ResponseEntity.status(HttpStatus.OK).body(voterService.getVoterInsight(constituency));
     }
+
+
+    @GetMapping("/voter-data")
+    ResponseEntity<VoterModel> getVoterByEmailAddress(@RequestParam String email) {
+        return ResponseEntity.status(HttpStatus.OK).body(voterService.getVoterByEmail(email));
+    }
 }

@@ -14,9 +14,10 @@ public class VoteController {
     @Autowired
     private VoteService voteService;
 
-    @PostMapping
-    public ResponseEntity<String> castVote(@RequestBody VoteRequestDTO dto) throws JsonProcessingException {
-        voteService.processVote(dto);
+    @GetMapping("cast")
+    public ResponseEntity<String> castVote(@RequestParam Integer candidateId,@RequestParam String aadharNumber) throws JsonProcessingException {
+      System.out.println("hello");
+        voteService.processVote(candidateId,aadharNumber);
         return ResponseEntity.status(HttpStatus.OK).body("Vote request received and sent for processing.");
     }
     @PutMapping("/voted")

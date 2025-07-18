@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "candidate",fallback = CandidateClientFallback.class)
 public interface CandidateClientService {
 
-    @GetMapping("/candidate/{candidateId}")
+    @GetMapping("{candidateId}")
     ResponseEntity<CandidateModel> getCandidateBYCandidateId(@PathVariable("candidateId") Integer candidateId);
 }

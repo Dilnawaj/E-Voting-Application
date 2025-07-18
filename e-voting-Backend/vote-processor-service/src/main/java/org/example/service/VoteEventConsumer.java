@@ -19,6 +19,9 @@ public class VoteEventConsumer {
     private CandidateClient candidateClient;
 
     @Autowired
+    private VoterCastingClient voterCastingClient;
+
+    @Autowired
     private VoterClient voterClient;
 
     @Autowired
@@ -38,7 +41,7 @@ public class VoteEventConsumer {
         System.out.println("candidate DOne");
         voterClient.markAsVoted(voteRequest.getAadharNumber());
         System.out.println("voter  DOne");
-
+        voterCastingClient.voteDoneUpdateStatus(voteRequest.getCandidateId(),voteRequest.getAadharNumber());
         messageProducer.sendMessage(topicName,objectMapper.writeValueAsString(voteRequest));
     }
 

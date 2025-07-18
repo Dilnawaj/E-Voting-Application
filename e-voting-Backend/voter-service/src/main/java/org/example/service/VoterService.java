@@ -153,4 +153,10 @@ public class VoterService {
        }
        return m;
     }
+
+    public VoterModel getVoterByEmail(String email) {
+
+
+    return this.modelMapper.map( voterRepo.findByEmailAddress(email),VoterModel.class);
+    }
 }

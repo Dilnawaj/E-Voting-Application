@@ -10,4 +10,6 @@ public interface VoterRepo extends JpaRepository<Voter,Integer> {
     Optional<Voter> findByAadharNumber(String aadharNumber);
     Optional<Voter> findByAadharNumberOrEmailAddress(String aadharNumber,String emailAddress);
     List<Voter> findByConstituency(String constituency);
+
+    Optional<Voter> findByEmailAddress(String emailAddress);
 }

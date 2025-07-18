@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "voter", fallback = VoterClientFallback.class)
 public interface VoterClient {
 
-    @GetMapping("/voter")
+    @GetMapping
     ResponseEntity<Boolean> isEligibleToVote(@RequestParam("aadharNumber") String aadharNumber);
 }

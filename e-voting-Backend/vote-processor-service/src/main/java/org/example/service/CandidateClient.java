@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "candidate", fallback = CandidateClientFallback.class)
 public interface CandidateClient {
 
-    @PutMapping("/candidate")
+    @PutMapping
     void incrementVote(@RequestParam("candidateId") Integer candidateId);
 }

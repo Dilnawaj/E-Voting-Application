@@ -17,6 +17,9 @@ public class Candidate {
 
     private String name;
 
+    private String banner;
+
+
     private String party;
 
     private Integer totalVotes;

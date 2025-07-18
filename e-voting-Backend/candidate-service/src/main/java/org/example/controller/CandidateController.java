@@ -71,4 +71,9 @@ public class CandidateController {
         return ResponseEntity.status(HttpStatus.OK).body(candidateService.setNotification(id));
           }
 
+    @GetMapping("constituency")
+    ResponseEntity<List<CandidateModel>> getAllCandidatesByConstituency(@RequestParam String constituency) {
+        return ResponseEntity.status(HttpStatus.OK).body(candidateService.allCandidatesOfConstituency(constituency));
+    }
+
 }

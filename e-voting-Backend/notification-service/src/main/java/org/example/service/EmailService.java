@@ -75,7 +75,7 @@ System.out.println("Name "+userName + " Email "+email);
         Session session = Session.getInstance(props, auth);
         // replace with actual user name
         System.out.println("Name "+userName + " Email "+email);
-        EmailUtil.sendAttachmentEmail(session, email, "Welcome, Voter! Your Registration is Confirmed", getBodyForVoter(candidateName,partyName));
+        EmailUtil.sendAttachmentEmail(session, email, userName+", thank you for casting Vote", getBodyForVoter(candidateName,partyName));
 
     }
 

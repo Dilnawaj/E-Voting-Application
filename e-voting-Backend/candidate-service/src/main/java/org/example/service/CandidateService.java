@@ -59,6 +59,7 @@ if(candidateOpt.isEmpty())
    {
        Candidate candidate = modelMapper.map(candidateModel, Candidate.class);
        candidate.setTotalVotes(0);
+       candidate.setBanner(getBanner(candidate.getParty()));
        candidate=candidateRepo.save(candidate);
 
        messageProducer.sendMessage(topicName,objectMapper.writeValueAsString(candidate));
@@ -69,6 +70,22 @@ if(candidateOpt.isEmpty())
     throw  new CustomException(HttpStatus.BAD_REQUEST.value(),"Candidate already exist with party and constituency: " + candidateModel.getName());
 }
       throw  new CustomException(HttpStatus.BAD_REQUEST.value(),"Candidate already exist with this emailAddress : " + candidateModel.getEmailAddress());
+    }
+
+    private String getBanner(String party) {
+        String banner;
+   if(party.equalsIgnoreCase("AAP"))
+   {
+       banner="AAP";
+   }
+   else if(party.equalsIgnoreCase("BJP"))
+   {
+       banner="BJP";
+   }
+   else {
+       banner="Congress";
+   }
+   return banner+".PNG";
     }
 
 
@@ -88,6 +105,11 @@ if(candidateOpt.isEmpty())
 
     public List<CandidateModel> allCandidatesOfParty(String partyName) {
         List<Candidate> candidates = candidateRepo.findByParty(partyName);
+        return candidates.stream().map(c -> this.modelMapper.map(c, CandidateModel.class)).toList();
+    }
+
+    public List<CandidateModel> allCandidatesOfConstituency(String constituency) {
+        List<Candidate> candidates = candidateRepo.findByConstituency(constituency);
         return candidates.stream().map(c -> this.modelMapper.map(c, CandidateModel.class)).toList();
     }
 

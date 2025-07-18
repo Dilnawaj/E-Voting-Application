@@ -6,6 +6,10 @@ import lombok.Data;
 public class CandidateModel {
     private Integer candidateId;
 
+
+    private String banner;
+
+
     private String name;
 
     private String party;

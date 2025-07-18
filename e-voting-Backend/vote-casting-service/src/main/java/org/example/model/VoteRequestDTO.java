@@ -4,7 +4,11 @@ import lombok.Data;
 
 @Data
 public class VoteRequestDTO {
+    private Integer candidateId;
     private String aadharNumber;
 
-    private Integer candidateId;
+    public VoteRequestDTO(Integer candidateId, String aadharNumber) {
+        this.candidateId = candidateId;
+        this.aadharNumber = aadharNumber;
+    }
 }
