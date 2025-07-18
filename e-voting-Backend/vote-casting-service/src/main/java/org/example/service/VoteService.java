@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class VoteService {
@@ -47,5 +48,16 @@ System.out.println(response.getBody());
         voteRequestProducer.sendVoterRegisteredEvent(dto);
         voteRequest.setStatus("SENT_TO_KAFKA");
         voteRequestRepo.save(voteRequest);
+    }
+
+    public void updateVoteStatus(Integer candidateId, String aadharNumber) {
+   Optional<VoteRequest> voterOpt =voteRequestRepo.findByCandidateIdAndAadharNumber(candidateId,aadharNumber);
+   if(voterOpt.isPresent())
+   {
+       voterOpt.get().setStatus("VOTE_DONE");
+       voteRequestRepo.save(voterOpt.get());
+
+   }
+
     }
 }

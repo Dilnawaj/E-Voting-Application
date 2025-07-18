@@ -19,6 +19,8 @@ private String aadharNumber;
 
 private Integer age;
 
+    private Character gender;
+
 private String constituency;
 
     private String emailAddress;
@@ -28,6 +30,8 @@ private Boolean hasVoted=false;
 private LocalDateTime registeredAt;
 
 private String state;
+
+    private String religion;
 
 private String password;
 

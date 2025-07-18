@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Value;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class VoterController {
@@ -51,4 +52,10 @@ public class VoterController {
         return "Responding from VoterService on port: " + port;
     }
 
+
+    @GetMapping("voter-insights")
+    ResponseEntity<Map<String,Long>> getVoterInsight(@RequestParam String constituency)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(voterService.getVoterInsight(constituency));
+    }
 }

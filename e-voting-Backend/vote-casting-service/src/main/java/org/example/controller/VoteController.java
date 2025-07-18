@@ -19,5 +19,10 @@ public class VoteController {
         voteService.processVote(dto);
         return ResponseEntity.status(HttpStatus.OK).body("Vote request received and sent for processing.");
     }
+    @PutMapping("/voted")
+    public ResponseEntity<String> updateVoteStatus(@RequestParam Integer candidateId,@RequestParam String aadharNumber){
+        voteService.updateVoteStatus(candidateId,aadharNumber);
+        return ResponseEntity.status(HttpStatus.OK).body("Vote status has been successfully updated.");
+    }
 
 }

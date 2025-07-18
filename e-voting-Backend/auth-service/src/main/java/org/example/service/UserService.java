@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -26,7 +28,7 @@ public class UserService {
         userRepo.save(user);
     }
 
-    public String login(UserModel userModel) {
+    public Map<String, String> login(UserModel userModel) {
 
 
         Optional<User> userOpt= userRepo.findByEmail(userModel.getEmail());
@@ -35,11 +37,24 @@ public class UserService {
             User user = userOpt.get();
             if(user.getPassword().equals(user.getPassword()))
             {
-                return "User has successfully login";
+                Map<String, String> response = new HashMap<>();
+               response.put("userType", user.getUserType());
+               response.put("userName", getName(user.getEmail()));
+                return response;
             }
             throw new CustomException(HttpStatus.BAD_REQUEST.value(),"Invalid password!");
         }
         throw  new CustomException(HttpStatus.NOT_FOUND.value(),"Invalid credentials");
 
+    }
+    public String getName(String name)
+    {
+        String temp="";
+        int i=0;
+        while (name.charAt(i) != '@') {
+            temp += name.charAt(i);
+            i++;
+        }
+        return  temp;
     }
 }
