@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CandidateRegistrationPage from "./pages/candidate/CandidateRegistrationPage";
 import VoterRegistrationPage from "./pages/voter/VoterRegistrationPage";
 import VotingPage from "./pages/voter/VotingPage";
-import AdminRegistration from "./pages/admin/AdminRegistration";
 import LoginPage from "./pages/LoginPage";
 import VoterDashboard from "./pages/voter/VoterDashboard";
 import CandidateDashboard from "./pages/candidate/CandidateDashboard";
@@ -23,7 +22,6 @@ function App() {
             element={<CandidateRegistrationPage />}
           />
           <Route path="/register-voter" element={<VoterRegistrationPage />} />
-          <Route path="/register-admin" element={<AdminRegistration />} />
           <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/vote" element={<VotingPage />} />

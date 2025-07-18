@@ -38,6 +38,7 @@
         <module>api-gateway</module>
         <module>auth-service</module>
         <module>common</module>
+        <module>election-commission</module>
         <!-- add other services here -->
     </modules>
 

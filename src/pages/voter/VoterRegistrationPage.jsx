@@ -93,7 +93,7 @@ function VoterRegistrationPage() {
     e.preventDefault();
     try {
       await registerVoter(voter);
-      setVoters((prevVoters) => [...prevVoters, voter]);
+      
       alert("Voter succesfully registred.");
     } catch (error) {
       console.error("Error registering voter:", error.response.data.error);
