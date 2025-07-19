@@ -1,0 +1,45 @@
+2nd
+
+C:\kafka>bin\windows\kafka-server-start.bat config\server.properties
+
+
+Ctrl + C
+1st
+
+C:\kafka>bin\windows\zookeeper-server-start.bat config\zookeeper.properties
+
+Ctrl + C
+
+
+
+
+
+
+C:\kafka>bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
+
+
+delete
+C:\tmp\kafka-logs
+
+
+
+bin\windows\zookeeper-server-start.bat config\zookeeper.properties
+
+bin\windows\kafka-server-start.bat config\server.properties
+
+bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+kafka-topics.sh --create --topic registration-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+//producer
+
+bin\windows\kafka-console-producer.bat --topic vote-events --bootstrap-server localhost:9092
+
+//consumer
+
+
+bin\windows\kafka-console-consumer.bat --topic registration-topic --from-beginning --bootstrap-server localhost:9092
+
+
+
+
