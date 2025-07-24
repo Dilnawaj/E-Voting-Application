@@ -18,6 +18,8 @@ import { CandidateContext } from "../context/CandidateContext";
 import { getCandidateByEmail } from "../api/candidateApi";
 import { getVoterData } from "../api/voterApi";
 import { VoterContext } from "../context/VoterContext";
+import { AdminContext } from "../context/AdminContext";
+import { getAdminByEmail } from "../api/AdminApi";
 
 function LoginPage() {
   const [email, setEmail] = useState("")
@@ -28,6 +30,8 @@ function LoginPage() {
   
     const { candidate, setCandidate,addCandidate } = useContext(CandidateContext);
       const { voter, setVoter, addVoter } = useContext(VoterContext);
+      
+      const {admin, setAdmin, addAdmin } = useContext(AdminContext);
   const handleChange = (type, e) => {
     const value = e.target.value;
     if (type === "password") {
@@ -71,6 +75,16 @@ function LoginPage() {
     }
   };
 
+
+  const fetchAdminData =async(email)=>{
+    try{
+      console.log("Fetching admin data for email:", email);
+      const adminData = await getAdminByEmail(email);
+      addAdmin(adminData);
+    } catch (error) {
+      console.error("Error fetching admin data:", error);
+    }
+  }
   const resetLogin = () => {
     setEmail("");
     setPassword("");
@@ -87,7 +101,8 @@ console.log("Login response:", response);
       console.log("User Type:", userType);
       //remove
 
-      if (userType === "admin") {
+      if (userType === "ADMIN") {
+        fetchAdminData(email)
         navigate("/admin/dashboard");
       } else if (userType === "CANDIDATE") {
         fetchCandidate(email)

@@ -5,15 +5,17 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../pages/logout";
 import { VoterContext } from "../context/VoterContext";
+import { AdminContext } from "../context/AdminContext";
 const Header = () => {
-    
+  
+    const { admin, setAdmin } = useContext(AdminContext);
   const { setCandidate ,candidate} = useContext(CandidateContext);
     const { voter, setVoter } = useContext(VoterContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     
-    logout({ setCandidate,candidate, voter, setVoter, navigate });
+    logout({ setCandidate,candidate, voter, setVoter,admin,setAdmin, navigate });
   };
   return (
     <header style={styles.header}>
@@ -26,6 +28,8 @@ const Header = () => {
     ? candidate.name
     : voter && voter.name
     ? voter.name
+    :admin && admin.name
+    ? admin.name
     : 'User'}
 </span>
 

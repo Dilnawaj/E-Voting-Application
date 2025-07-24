@@ -7,9 +7,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { RecoilRoot } from 'recoil';
 import { VoterProvider } from './context/VoterContext';
+import { AdminProvider } from './context/AdminContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <AdminProvider>
     <CandidateProvider>
       <VoterProvider>
          <RecoilRoot>
@@ -17,6 +19,7 @@ root.render(
     </RecoilRoot>
     </VoterProvider>
     </CandidateProvider>
+    </AdminProvider>
   </React.StrictMode>
 );
 

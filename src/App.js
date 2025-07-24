@@ -12,6 +12,8 @@ import CandidateVotes from "./pages/candidate/CandidateVotes";
 import CandidateElection from "./pages/candidate/CandidateElection";
 import VoterInsightsPage from "./pages/candidate/VoterInsightsPage";
 import NotificationList from "./pages/candidate/NotificationList";
+import AdminRegistration from "./pages/election-commission/AdminRegistration";
+import AdminDashboard from "./pages/election-commission/AdminDashboard";
 function App() {
   return (
     <>
@@ -21,7 +23,14 @@ function App() {
             path="/candidate/register-candidate"
             element={<CandidateRegistrationPage />}
           />
-          <Route path="/register-voter" element={<VoterRegistrationPage />} />
+          
+          <Route
+            path="/admin/register-admin"
+            element={<AdminRegistration />}
+          />
+          
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/voter/register-voter" element={<VoterRegistrationPage />} />
           <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/vote" element={<VotingPage />} />

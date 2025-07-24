@@ -11,20 +11,20 @@ import {
   Button,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { registerAdmin } from "../api/AdminApi";
+import { registerAdmin } from "../../api/AdminApi";
 function AdminRegistration() {
   const [passwordError, setPasswordError] = useState("");
 
   const [admin, setAdmin] = useState({
     name: "",
-    email: "",
+    emailAddress: "",
     password: "",
   });
 
   const resetAdmin = () => {
     setAdmin({
       name: "",
-      email: "",
+      emailAddress: "",
       password: "",
     });
   };
@@ -63,7 +63,7 @@ function AdminRegistration() {
     <Container style={{ marginTop: "20px" }}>
       <Card inverse style={{ backgroundColor: "black", marginBottom: "145px" }}>
         <CardHeader>
-          <h3>Fill Information for Register (Candidate)</h3>
+          <h3>Fill Information for Register (Admin)</h3>
         </CardHeader>
         <CardBody>
           <Form onSubmit={handleSubmit}>
@@ -79,13 +79,13 @@ function AdminRegistration() {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="email">Email</Label>
+              <Label for="emailAddress">Email</Label>
               <Input
                 type="email"
-                id="email"
-                placeholder="Enter email"
-                value={admin.email}
-                onChange={(e) => handleChange("email", e)}
+                id="emailAddress"
+                placeholder="Enter emailAddress"
+                value={admin.emailAddress}
+                onChange={(e) => handleChange("emailAddress", e)}
                 required
               />
             </FormGroup>

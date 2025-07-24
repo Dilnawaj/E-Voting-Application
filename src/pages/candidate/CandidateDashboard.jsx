@@ -66,20 +66,14 @@ const CandidateDashboard = () => {
   return (
    
 <Base>
-      <div
-        style={{
-          padding: "20px",
-          minHeight: "80vh",
-          background: "linear-gradient(to right, #6a11cb, #2575fc)",
-          color: "#fff",
-        }}
-      >
+      
         <h1
           style={{
             textAlign: "center",
             marginBottom: "30px",
             fontSize: "36px",
             fontWeight: "bold",
+            textDecoration: "underline",
           }}
         >
           Candidate Dashboard
@@ -124,7 +118,7 @@ const CandidateDashboard = () => {
             </div>
           ))}
         </div>
-      </div>
+      
     </Base>
   );
 };

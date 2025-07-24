@@ -55,7 +55,7 @@ handleCastVote(candidate);
              }}
           >
             <div className="card-body text-center">
-              <h3 className="card-title  fw-bold">🗳️ Vote for the Candidate</h3>
+              <h3 className="card-title  fw-bold" style={{ textDecoration: "underline" }}>🗳️ Vote for the Candidate</h3>
               <p className="card-text text-secondary">
                 Choose your leader wisely and cast your vote.
               </p>
