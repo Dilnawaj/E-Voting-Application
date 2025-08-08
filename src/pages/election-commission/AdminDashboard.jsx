@@ -7,15 +7,15 @@ const AdminDashboard = () => {
 
   const handleProfile = () => {
     console.log("Profile clicked");
-    navigate("/candidate/profile");
+    navigate("/admin/profile");
   };
 
-  const handleElection = () => {
-    navigate("/candidate/election");
+  const electionEvent = () => {
+    navigate("/election/events");
   };
 
-  const handleVoted = () => {
-    navigate("/candidate/votes");
+  const createEvent = () => {
+    navigate("/create/event");
   };
   const handleNotification = () => {
     navigate("/candidate/notification");
@@ -24,7 +24,7 @@ const AdminDashboard = () => {
   const cards = [
     {
       title: "My Profile",
-      description: "View and update your candidate profile details.",
+      description: "View and update your admin profile details.",
       color: "#4A90E2",
       onClick: handleProfile,
     },
@@ -32,13 +32,13 @@ const AdminDashboard = () => {
       title: "Election Events",
       description: "Analyze and understand data about your voters.",
       color: "#FF6F61",
-      onClick: () => navigate("/candidate/voter-insights"),
+      onClick: electionEvent,
     },
     {
       title: "Create Event",
-      description: "Watch live voting data and analytics.",
+      description:" Create a new election event.",
       color: "#F5A623",
-      onClick: handleVoted,
+      onClick: createEvent,
     },
     {
       title: "Manage Voters",
@@ -50,7 +50,7 @@ const AdminDashboard = () => {
       title: "Manage Candidates",
       description: "Monitor live voting statistics.",
       color: "#2ECC71",
-      onClick: handleVoted,
+     // onClick: ,
     },
     {
       title: "Notifications",

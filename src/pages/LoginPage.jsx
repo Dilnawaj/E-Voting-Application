@@ -127,7 +127,7 @@ console.log("Login response:", response);
   return (
     <Container>
       <div className="responsive-login-wrapper">
-        <Card inverse style={{ backgroundColor: "black" }}>
+        <Card inverse style={{ backgroundColor: "grey" }}>
           <CardHeader>
             <h3 style={{ textAlign: "center" }}>Login Page </h3>
           </CardHeader>

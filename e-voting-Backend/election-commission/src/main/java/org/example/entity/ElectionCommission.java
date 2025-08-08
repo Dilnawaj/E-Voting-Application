@@ -1,11 +1,11 @@
 package org.example.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 
 import lombok.Data;
+
+import java.util.*;
 
 @Data
 @Entity
@@ -22,5 +22,8 @@ public class ElectionCommission {
     private  String password;
 
     private String about;
+    @OneToMany(mappedBy = "electionCommission",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Event> event = new ArrayList<>();
 
 }

@@ -14,6 +14,10 @@ import VoterInsightsPage from "./pages/candidate/VoterInsightsPage";
 import NotificationList from "./pages/candidate/NotificationList";
 import AdminRegistration from "./pages/election-commission/AdminRegistration";
 import AdminDashboard from "./pages/election-commission/AdminDashboard";
+import AdminProfile from "./pages/election-commission/AdminProfile";
+import ElectionEventPage from "./pages/election-commission/ElectionEventPage";
+import CreateEvent from "./pages/election-commission/CreateEvent";
+import AdminEventList from "./pages/election-commission/AdminEventList";
 function App() {
   return (
     <>
@@ -28,6 +32,15 @@ function App() {
             path="/admin/register-admin"
             element={<AdminRegistration />}
           />
+          <Route
+            path="/create/event"
+            element={<CreateEvent />}
+          />
+              <Route path ="/election/events" element ={<AdminEventList/>}/>
+{/* 
+          <Route path ="/election/events" element ={<ElectionEventPage/>}/> */}
+
+          <Route path ="/admin/profile" element={<AdminProfile />} />
           
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/voter/register-voter" element={<VoterRegistrationPage />} />

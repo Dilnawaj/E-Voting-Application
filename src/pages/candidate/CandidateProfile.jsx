@@ -25,7 +25,7 @@ const CandidateProfile = () => {
     <Container style={{ marginTop: "20px" }}>
       <Card inverse style={{ backgroundColor: "black", marginBottom: "145px" }}>
         <CardHeader>
-          <h3>{candidate.name} Profile</h3>
+          <h3 style={{ color: "white" ,textAlign: "center" }}>Profile of ({candidate.name})</h3>
         </CardHeader>
         <CardBody>
           <FormGroup>

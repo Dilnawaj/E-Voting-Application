@@ -104,7 +104,7 @@ function VoterRegistrationPage() {
 
   return (
     <Container style={{ marginTop: "20px" }}>
-      <Card inverse style={{ backgroundColor: "black", marginBottom: "145px" }}>
+      <Card inverse style={{ backgroundColor: "grey", marginBottom: "145px" }}>
         <CardHeader>
           <h3>Fill Information for Register (Voter)</h3>
         </CardHeader>

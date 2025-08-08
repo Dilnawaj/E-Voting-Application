@@ -61,7 +61,7 @@ function AdminRegistration() {
   };
   return (
     <Container style={{ marginTop: "20px" }}>
-      <Card inverse style={{ backgroundColor: "black", marginBottom: "145px" }}>
+      <Card inverse style={{ backgroundColor: "grey", marginBottom: "145px" }}>
         <CardHeader>
           <h3>Fill Information for Register (Admin)</h3>
         </CardHeader>
