@@ -20,6 +20,7 @@ import { getVoterData } from "../api/voterApi";
 import { VoterContext } from "../context/VoterContext";
 import { AdminContext } from "../context/AdminContext";
 import { getAdminByEmail } from "../api/AdminApi";
+import { doLogin } from "../auth/Auth";
 
 function LoginPage() {
   const [email, setEmail] = useState("")
@@ -100,6 +101,10 @@ console.log("Login response:", response);
       const { userType } = response;
       console.log("User Type:", userType);
       //remove
+
+        doLogin(response, () => {
+            console.log("login detail is saved to local storage");
+          });
 
       if (userType === "ADMIN") {
         fetchAdminData(email)

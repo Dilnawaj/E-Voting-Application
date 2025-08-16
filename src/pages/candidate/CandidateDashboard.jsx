@@ -4,7 +4,7 @@ import { CandidateContext } from "../../context/CandidateContext";
 import { getCandidateByEmail } from "../../api/candidateApi";
 import { useRecoilValue } from "recoil";
 import Base from "../../Base";
-import { logout } from "../logout";
+
 
 
 const CandidateDashboard = () => {
