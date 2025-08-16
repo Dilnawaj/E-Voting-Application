@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { CandidateContext } from "../../context/CandidateContext";
 
 function CandidateRegistrationPage() {
-  const { setCandidates } = useContext(CandidateContext);
+  
   const [passwordError, setPasswordError] = useState("");
   const [candidate, setCandidate] = useState({
     name: "",
@@ -92,7 +92,7 @@ function CandidateRegistrationPage() {
     try {
       await registerCandidate(candidate);
       alert("Candidate registered successfully");
-      setCandidates((prevCandidates) => [...prevCandidates, candidate]);
+   
     } catch (error) {
       console.error("Error registering voter:", error.response.data.error);
       alert(error.response.data.error);
