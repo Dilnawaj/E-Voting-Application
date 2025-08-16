@@ -2,8 +2,10 @@ package org.example.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.LoginRequestDto;
 import org.example.UserDTO;
 import org.example.config.MessageProducer;
+import org.example.config.PasswordConfig;
 import org.example.entity.Voter;
 import org.example.exception.CustomException;
 import org.example.model.VoterModel;
@@ -37,6 +39,8 @@ public class VoterService {
     private MessageProducer messageProducer;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private JwtService jwtService;
 
     @Autowired
     private VoterKafkaProducer voterKafkaProducer;
@@ -47,10 +51,12 @@ public class VoterService {
    {
        Voter voter= this.modelMapper.map(voterModel,Voter.class);
        voter.setRegisteredAt(LocalDateTime.now());
+       voter.setPassword(PasswordConfig.hashPassword(voterModel.getPassword()));
+
        voter =voterRepo.save(voter);
        voterKafkaProducer.sendVoterRegisteredEvent(voter);
 
-       UserDTO userModel = new UserDTO(voter.getEmailAddress(),voter.getPassword(),"VOTER");
+       UserDTO userModel = new UserDTO(voter.getEmailAddress(),"VOTER");
        messageProducer.sendMessage(userTopic,objectMapper.writeValueAsString(userModel));
        return this.modelMapper.map(voter,VoterModel.class);
    }
@@ -158,5 +164,22 @@ public class VoterService {
 
 
     return this.modelMapper.map( voterRepo.findByEmailAddress(email),VoterModel.class);
+    }
+
+    public String login(LoginRequestDto loginRequestDto) {
+
+       Voter voter = voterRepo.findByEmailAddress( loginRequestDto.getEmail()).orElseThrow(()->  new CustomException(HttpStatus.NOT_FOUND.value(), "User not found"));
+
+        boolean isPasswordMatched = PasswordConfig.checkPassword(loginRequestDto.getPassword(),voter.getPassword());
+
+        if(!isPasswordMatched)
+        {
+            throw new CustomException(HttpStatus.BAD_REQUEST.value(),"incorrect password");
+        }
+
+
+
+        return jwtService.generateAccessToken(voter);
+
     }
 }

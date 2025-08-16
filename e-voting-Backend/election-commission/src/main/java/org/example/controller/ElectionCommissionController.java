@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.example.LoginRequestDto;
 import org.example.entity.ElectionCommission;
 import org.example.model.ElectionCommissionModel;
 import org.example.model.EventModel;
@@ -25,10 +26,17 @@ public class ElectionCommissionController {
     ResponseEntity<Map<String,String>> addAdminInElectionService(@RequestBody ElectionCommissionModel electionCommission) throws JsonProcessingException {
         return ResponseEntity.status(HttpStatus.OK).body(electionCommissionService.addAdmin(electionCommission));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto)
+    {
+        return  ResponseEntity.status(HttpStatus.OK).body(electionCommissionService.login(loginRequestDto));
+    }
+
     @GetMapping
     ResponseEntity<ElectionCommission> getAdminDetailsByEmail(@RequestParam String email)
     {
-        System.out.println("Hello");
+
         return ResponseEntity.status(HttpStatus.OK).body(electionCommissionService.getAdminDetailsByAdmin(email));
     }
 

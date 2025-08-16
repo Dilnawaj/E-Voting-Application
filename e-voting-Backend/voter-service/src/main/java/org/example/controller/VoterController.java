@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.example.LoginRequestDto;
 import org.example.model.VoterModel;
 import org.example.service.VoterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class VoterController {
     @PostMapping
     ResponseEntity<VoterModel> addVoter(@RequestBody VoterModel voterModel) throws JsonProcessingException {
         return ResponseEntity.status(HttpStatus.CREATED).body(voterService.addVoter(voterModel));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto)
+    {
+        System.out.println("Voter Login");
+        return  ResponseEntity.status(HttpStatus.OK).body(voterService.login(loginRequestDto));
     }
 
     @GetMapping("list")

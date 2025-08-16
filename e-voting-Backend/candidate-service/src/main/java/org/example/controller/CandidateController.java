@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.example.LoginRequestDto;
 import org.example.entity.Notification;
 import org.example.model.CandidateModel;
 import org.example.model.VoteStats;
@@ -22,6 +23,14 @@ public class CandidateController {
     ResponseEntity<CandidateModel> addCandidate(@RequestBody CandidateModel candidateModel) throws JsonProcessingException {
         return ResponseEntity.status(HttpStatus.CREATED).body(candidateService.addCandidate(candidateModel));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto)
+    {
+        System.out.println("Candidate Login");
+        return  ResponseEntity.status(HttpStatus.OK).body(candidateService.login(loginRequestDto));
+    }
+
 
     @PutMapping
     ResponseEntity<CandidateModel> updateCandidate(@RequestParam Integer candidateId) {

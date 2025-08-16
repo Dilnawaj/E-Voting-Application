@@ -2,10 +2,13 @@ package org.example.serviceImpl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.LoginRequestDto;
 import org.example.UserDTO;
 import org.example.config.MessageProducer;
+import org.example.config.PasswordConfig;
 import org.example.entity.ElectionCommission;
 import org.example.entity.Event;
+import org.example.exception.CustomException;
 import org.example.model.ElectionCommissionModel;
 import org.example.model.EventModel;
 import org.example.model.EventStatus;
@@ -15,6 +18,7 @@ import org.example.service.ElectionCommissionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -38,13 +42,17 @@ public class ElectionCommissionServiceImpl implements ElectionCommissionService 
     private ModelMapper modelMapper;
     @Autowired
     private EventRepo eventRepo;
+    @Autowired
+    JwtService jwtService;
 
     @Override
     public  Map<String,String> addAdmin(ElectionCommissionModel electionCommissionModel) throws JsonProcessingException {
 
         ElectionCommission electionCommission=this.modelMapper.map(electionCommissionModel,ElectionCommission.class);
-          electionCommissionRepo.save(electionCommission);
-        UserDTO userModel = new UserDTO(electionCommission.getEmailAddress(),electionCommission.getPassword(),"ADMIN");
+        electionCommission.setPassword(PasswordConfig.hashPassword(electionCommissionModel.getPassword()));
+
+        electionCommissionRepo.save(electionCommission);
+        UserDTO userModel = new UserDTO(electionCommission.getEmailAddress(),"ADMIN");
         messageProducer.sendMessage(userTopic,objectMapper.writeValueAsString(userModel));
 
         Map<String,String> response = new HashMap<>();
@@ -68,6 +76,23 @@ public class ElectionCommissionServiceImpl implements ElectionCommissionService 
         Optional<ElectionCommission> electionCommissionOptional=  electionCommissionRepo.findByEmailAddress(email);
         return  electionCommissionOptional.get().getEvent().stream().map(e->this.modelMapper.map(e,EventModel.class)).collect(Collectors.toList());
 
+
+    }
+
+    @Override
+    public String login(LoginRequestDto loginRequestDto) {
+        ElectionCommission electionCommission = electionCommissionRepo.findByEmailAddress( loginRequestDto.getEmail()).orElseThrow(()->  new CustomException(HttpStatus.NOT_FOUND.value(), "User not found"));
+
+        boolean isPasswordMatched = PasswordConfig.checkPassword(loginRequestDto.getPassword(),electionCommission.getPassword());
+
+        if(!isPasswordMatched)
+        {
+            throw new CustomException(HttpStatus.BAD_REQUEST.value(),"incorrect password");
+        }
+
+
+
+        return jwtService.generateAccessToken(electionCommission);
 
     }
 

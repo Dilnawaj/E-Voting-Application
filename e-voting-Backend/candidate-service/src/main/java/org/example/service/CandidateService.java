@@ -2,8 +2,10 @@ package org.example.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.LoginRequestDto;
 import org.example.UserDTO;
 import org.example.config.MessageProducer;
+import org.example.config.PasswordConfig;
 import org.example.entity.Candidate;
 import org.example.entity.Notification;
 import org.example.exception.CustomException;
@@ -35,6 +37,9 @@ public class CandidateService {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private JwtService jwtService;
+
     @Value("${candidate.topic}")
     private String topicName;
     @Value("${user.topic}")
@@ -58,12 +63,14 @@ if(candidateOpt.isEmpty())
    if(isPartyPresent.isEmpty())
    {
        Candidate candidate = modelMapper.map(candidateModel, Candidate.class);
+       candidate.setPassword(PasswordConfig.hashPassword(candidateModel.getPassword()));
+
        candidate.setTotalVotes(0);
        candidate.setBanner(getBanner(candidate.getParty()));
        candidate=candidateRepo.save(candidate);
 
        messageProducer.sendMessage(topicName,objectMapper.writeValueAsString(candidate));
-       UserDTO userModel = new UserDTO(candidate.getEmailAddress(),candidate.getPassword(),"CANDIDATE");
+       UserDTO userModel = new UserDTO(candidate.getEmailAddress(),"CANDIDATE");
        messageProducer.sendMessage(userTopic,objectMapper.writeValueAsString(userModel));
        return this.modelMapper.map(candidate, CandidateModel.class);
    }
@@ -159,6 +166,22 @@ if(candidateOpt.isEmpty())
             return "Notification marked as read";
         }
         return ("Notification not found");
+
+    }
+
+    public String login(LoginRequestDto loginRequestDto) {
+        Candidate candidate = candidateRepo.findByEmailAddress( loginRequestDto.getEmail()).orElseThrow(()->  new CustomException(HttpStatus.NOT_FOUND.value(), "User not found"));
+
+        boolean isPasswordMatched = PasswordConfig.checkPassword(loginRequestDto.getPassword(),candidate.getPassword());
+
+        if(!isPasswordMatched)
+        {
+            throw new CustomException(HttpStatus.BAD_REQUEST.value(),"incorrect password");
+        }
+
+
+
+        return jwtService.generateAccessToken(candidate);
 
     }
 }

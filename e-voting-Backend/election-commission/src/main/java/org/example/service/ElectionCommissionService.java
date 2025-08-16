@@ -1,6 +1,7 @@
 package org.example.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.example.LoginRequestDto;
 import org.example.entity.ElectionCommission;
 import org.example.model.ElectionCommissionModel;
 import org.example.model.EventModel;
@@ -18,4 +19,6 @@ public interface ElectionCommissionService {
     EventModel addEventDetails(EventModel eventModel,String email);
 
     List<EventModel> getEventDetailsByEmail(String email);
+
+    String login(LoginRequestDto loginRequestDto);
 }

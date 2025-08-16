@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.example.model.UserModel;
 import org.example.repo.UserRepo;
@@ -18,7 +19,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody UserModel userModel) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody UserModel userModel) throws JsonProcessingException {
        return ResponseEntity.status(HttpStatus.OK).body(userService.login(userModel));
     }
 }
